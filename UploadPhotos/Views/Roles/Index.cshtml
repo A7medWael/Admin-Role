@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Option</th>
+            <th scope="col">Column heading</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var u in Model)
+        {
+             <tr class="table-active">
+            <th scope="row">Active</th>
+            <td>@u.Id</td>
+            <td>@u.UserName</td>
+            <td><a asp-controller="Roles" asp-action="addRole" asp-route-userId="@u.Id" class="btn btn-sm btn-success">Add Role<i class="bi bi pencil"></i></a></td>
+        </tr>
+        }
+       </tbody>
+</table>

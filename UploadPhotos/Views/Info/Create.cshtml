@@ -1,0 +1,40 @@
+﻿@model Info
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<form asp-action="Create" asp-controller="Info" enctype="multipart/form-data">
+
+<fieldset>
+      <div class="form-group">
+        <label class="col-form-label mt-4" asp-for="Name">Name</label>
+        <input type="text" class="form-control" placeholder="name" asp-for="Name">
+        <span asp-validation-for="Name"></span>
+        </div>
+       <div class="form-group mt-4">
+            <input asp-for="ClientFile" class="form-control" type="file" onchange="loadfile(event)" />
+        <img id="myImg" height="200" />
+        </div>
+        <div class="form-group mt-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+</fieldset>
+
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+<script>
+    var loadfile = function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var myImg = document.getElementById('myImg');
+            myImg.src = reader.result;
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+</script>
+
+}

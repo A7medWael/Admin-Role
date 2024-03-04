@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ViewRoleModel>
+@{
+    ViewData["Title"] = "addRole";
+}
+
+<h1>addRole</h1>
+<form method="post" >
+    <div class="container p-3">
+        <div class="row pt-4">
+            <div class="col-6">
+                <h2 class="text-primary">User Role</h2>
+                <h3>@ViewBag.userName</h3>
+            </div>
+        </div>
+        <input hidden id="userName" value="@ViewBag.userName" />
+        <input hidden id="userId" value="@ViewBag.userId" />
+        <input hidden id="jsonRoles" Name="jsonRoles" />
+
+        <table id="roletable" class="table table-hover">
+         <thead>
+             <tr>
+                 <th scope="col">Role Id</th>
+                    <th scope="col">Role Name</th>
+                    <th scope="col"></th>
+                </tr>
+         </thead>
+            <tbody>
+                @foreach (var u in Model)
+                {
+                    <tr class="table-active">
+                        <td scope="row" class="tId" width="30%">@u.roleId</td>
+                        <td class="tName">@u.roleName</td>
+                        <td>
+                            <input type="checkbox" class="tCheck" @(u.useRole? "checked":"") />
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <button type="submit" onclick="updateJsonFile()" class="btn btn-primary" style="width:150px">Save</button>
+</form>
+@section Scripts{
+    <script>
+        function readtabletoarray() {
+            var arr=[];
+            var jsData = "";
+            $("#roletable tbody tr").each(function (index, data) /*Foreach عشان ترجع الداتا والاندكس بتاع كل داتا*/ {
+                const roleId = $(data).find(".tId").text();
+                const roleName = $(data).find(".tName").text();
+                const useRole = $(data).find(".tCheck").is(":checked");
+                arr.push({
+                    roleId: roleId,
+                    roleName: roleName,
+                    useRole: useRole
+                });
+
+            });
+              
+            return JSON.stringify(arr);
+        }
+        function updateJsonFile() {
+            $("#jsonRoles").val(readtabletoarray());
+        }
+    </script>
+}
